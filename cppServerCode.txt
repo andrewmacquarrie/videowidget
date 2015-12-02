@@ -1,0 +1,52 @@
+
+void SendDataPacket(bool play) {
+	SOCKET sock;
+	addrinfo* pAddr;
+	addrinfo hints;
+	sockaddr sAddr;
+	int fromlen;
+	const char czPort[] = "7755";
+	const char czAddy[] = "127.0.0.1";
+
+	WSADATA wsa;
+	unsigned short usWSAVersion = MAKEWORD(2, 2);
+
+	std:string message = play ? "PLAY" : "PAUSE";
+
+	char * Buffer = new char[message.length() + 1];
+	std::strcpy(Buffer, message.c_str());
+
+	int ret;
+
+	//Start WSA
+	WSAStartup(usWSAVersion, &wsa);
+
+	//Create Socket
+	sock = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
+
+	//Resolve host address
+	memset(&hints, 0, sizeof(hints));
+	hints.ai_family = AF_INET;
+	hints.ai_protocol = IPPROTO_UDP;
+	hints.ai_socktype = SOCK_DGRAM;
+
+	if (getaddrinfo(czAddy, czPort, &hints, &pAddr))
+	{
+		std::cerr << "Could not resolve address...\n";
+		std::cin.get();
+		WSACleanup();
+		return;
+	}
+
+	//Start Transmission
+	ret = sendto(sock, Buffer, sizeof(Buffer), 0, pAddr->ai_addr, pAddr->ai_addrlen);
+	if (ret != sizeof(Buffer))
+	{
+		std::cerr << "Could not send data\n";
+		std::cin.get();
+		WSACleanup();
+		return;
+	}
+
+	WSACleanup();
+}
