@@ -9,10 +9,11 @@ HEADERS = \
 
 SOURCES = \
     main.cpp \
-    videoplayer.cpp \
-    server.cpp
+    videoplayer.cpp
 
 target.path = C:/Projects/videowidget/videowidget
 INSTALLS += target
 
 QT+=widgets
+
+CONFIG+= static

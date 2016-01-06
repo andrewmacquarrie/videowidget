@@ -142,7 +142,7 @@ void VideoPlayer::mediaStateChanged(QMediaPlayer::State state)
 void VideoPlayer::initSocket()
 {
     udpSocket = new QUdpSocket(this);
-    udpSocket->bind(QHostAddress::LocalHost, 7755);
+    udpSocket->bind(QHostAddress::AnyIPv4, 7755);
 
     connect(udpSocket, SIGNAL(readyRead()), this, SLOT(readPendingDatagrams()));
 
