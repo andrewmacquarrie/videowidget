@@ -4,8 +4,7 @@ TARGET = videowidget
 QT += multimedia multimediawidgets
 
 HEADERS = \
-    videoplayer.h \
-    server.h
+    videoplayer.h
 
 SOURCES = \
     main.cpp \

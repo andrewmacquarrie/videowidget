@@ -42,7 +42,9 @@
 #define VIDEOPLAYER_H
 
 #include <qmediaplayer.h>
-#include "server.h"
+#include <QUdpSocket>
+#include <QObject>
+
 
 #include <QtGui/QMovie>
 #include <QtWidgets/QWidget>
