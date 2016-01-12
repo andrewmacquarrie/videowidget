@@ -165,6 +165,7 @@ void VideoPlayer::readPendingDatagrams()
         QString str = QString::fromUtf8(datagram.data());
         QString play = "PLAY";
         QString pause = "PAUSE";
+        QString open = "OPEN ";
 
         if(str == play) {
             qDebug() << "Playing (command via UDP : '" << datagram.data() << "')";
@@ -174,12 +175,17 @@ void VideoPlayer::readPendingDatagrams()
             qDebug() << "Pausing (command via UDP : '" << datagram.data() << "')";
             mediaPlayer.pause();
             videoWidget->setFullScreen(false);
-        } else {
+        } else if (str.startsWith(open)) {
+            qDebug() << "Open (command via UDP : '" << datagram.data() << "')";
+            QString fileName = str.right(str.length() - open.length());
+            qDebug() << "File to open: " << fileName;
+            if (!fileName.isEmpty()) {
+                mediaPlayer.setMedia(QUrl::fromLocalFile(fileName));
+                playButton->setEnabled(true);
+            }
+        }else {
             qDebug() << "Error, unrecognised input: '" << datagram.data() << "'";
         }
-
-
-
     }
 }
 
