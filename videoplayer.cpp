@@ -108,7 +108,11 @@ void VideoPlayer::openFile()
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open Movie"),QDir::homePath());
 
     if (!fileName.isEmpty()) {
-        mediaPlayer.setMedia(QUrl::fromLocalFile(fileName));
+        playlist.clear();
+        playlist.addMedia(QUrl::fromLocalFile(fileName));
+        playlist.setCurrentIndex(1);
+        mediaPlayer.setPlaylist(&playlist);
+        playlist.setPlaybackMode(QMediaPlaylist::Loop);
         playButton->setEnabled(true);
     }
 }
@@ -180,7 +184,11 @@ void VideoPlayer::readPendingDatagrams()
             QString fileName = str.right(str.length() - open.length());
             qDebug() << "File to open: " << fileName;
             if (!fileName.isEmpty()) {
-                mediaPlayer.setMedia(QUrl::fromLocalFile(fileName));
+                playlist.clear();
+                playlist.addMedia(QUrl::fromLocalFile(fileName));
+                playlist.setCurrentIndex(1);
+                mediaPlayer.setPlaylist(&playlist);
+                playlist.setPlaybackMode(QMediaPlaylist::Loop);
                 playButton->setEnabled(true);
             }
         }else {

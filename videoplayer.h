@@ -48,6 +48,7 @@
 
 #include <QtGui/QMovie>
 #include <QtWidgets/QWidget>
+#include <QMediaPlaylist>
 
 class QAbstractButton;
 class QSlider;
@@ -76,6 +77,7 @@ private slots:
 
 private:
     QMediaPlayer mediaPlayer;
+    QMediaPlaylist playlist;
     QAbstractButton *playButton;
     QSlider *positionSlider;
     QLabel *errorLabel;
